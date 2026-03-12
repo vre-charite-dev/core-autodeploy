@@ -17,17 +17,7 @@ WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
 
-# Use ARG for local builds and --mount=type=secret for CI
-ARG GITHUB_TOKEN
-RUN --mount=type=secret,id=GIT_AUTH_TOKEN \
-    GITHUB_TOKEN=${GITHUB_TOKEN:-$(cat /run/secrets/GIT_AUTH_TOKEN 2>/dev/null || echo '')} && \
-    if [ -n "$GITHUB_TOKEN" ]; then \
-      git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"; \
-    fi && \
-    poetry install --only main --no-root --verbose && \
-    if [ -n "$GITHUB_TOKEN" ]; then \
-      git config --global --unset url."https://${GITHUB_TOKEN}@github.com/".insteadOf; \
-    fi
+RUN poetry install --only main --no-root --verbose
 
 # The runtime image, using the venv that has been built before
 FROM python:3.8-slim-bookworm AS runtime

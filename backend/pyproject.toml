@@ -72,7 +72,7 @@ werkzeug = "1.0.1"
 wrapt = "1.12.1"
 zope-event = "4.4"
 zope-interface = "5.1.0"
-common = { git = "https://github.com/vre-charite-dev/service_common.git", branch="feature/build-common-package" }
+common = { git = "https://github.com/vre-charite-autodeploy/service_common.git", branch="main" }
 uvicorn = "^0.30.5"
 
 [build-system]
